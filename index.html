@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AvofsionTDf — создание современных сайтов</title>
+  <meta name="description" content="Создание современных сайтов, лендингов, сайтов для бизнеса и портфолио. Современный дизайн, продуманная структура и адаптивная разработка.">
+  <meta name="theme-color" content="#08080B">
+  <meta property="og:title" content="AvofsionTDf — создание современных сайтов">
+  <meta property="og:description" content="Современный дизайн, продуманная структура и адаптивная разработка — от идеи до готового сайта.">
+  <meta property="og:type" content="website">
+  <style>
+    :root{
+      --bg:#08080B; --surface:#111116; --panel:#15151C;
+      --text:#F5F5F7; --muted:#A0A0AD; --accent:#8B5CF6;
+      --accent-soft:rgba(139,92,246,.14); --border:rgba(255,255,255,.09);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; background:var(--bg); color:var(--text); overflow-x:hidden;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+      line-height:1.6; -webkit-font-smoothing:antialiased;
+    }
+    img{max-width:100%; display:block}
+    a{color:inherit; text-decoration:none}
+    button{font:inherit; cursor:pointer}
+    :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px}
+    .container{width:100%; max-width:1180px; margin:0 auto; padding:0 20px}
+    .skip-link{
+      position:absolute; left:-9999px; top:0; z-index:100;
+      background:var(--accent); color:#fff; padding:12px 18px; border-radius:0 0 12px 0;
+    }
+    .skip-link:focus{left:0}
+
+    .header{
+      position:fixed; inset:0 0 auto; z-index:50;
+      background:rgba(8,8,11,.84); border-bottom:1px solid var(--border);
+      backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    }
+    .header-inner{display:flex; align-items:center; justify-content:space-between; min-height:64px; gap:12px}
+    .logo{font-size:17px; font-weight:750; letter-spacing:-.02em; white-space:nowrap}
+    .logo span{color:var(--accent)}
+    .nav{display:none; align-items:center; gap:26px}
+    .nav a{color:var(--muted); font-size:14px; transition:color .2s}
+    .nav a:hover{color:#fff}
+    .header-actions{display:flex; align-items:center; gap:10px}
+    .lang{display:flex; padding:3px; border:1px solid var(--border); border-radius:999px; background:rgba(255,255,255,.04)}
+    .lang button{
+      border:0; background:transparent; color:var(--muted);
+      padding:6px 11px; border-radius:999px; font-size:11px; font-weight:800; text-transform:uppercase;
+    }
+    .lang button[aria-pressed="true"]{background:var(--accent); color:#fff}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      min-height:48px; padding:13px 24px; border:1px solid transparent; border-radius:999px;
+      font-size:15px; font-weight:700; transition:background .2s,border-color .2s,transform .15s;
+    }
+    .btn:active{transform:scale(.98)}
+    .btn-primary{background:var(--accent); color:#fff; box-shadow:0 0 42px rgba(139,92,246,.32)}
+    .btn-primary:hover{background:#7C4EE8}
+    .btn-ghost{border-color:rgba(255,255,255,.16); background:rgba(255,255,255,.05); color:#fff}
+    .btn-ghost:hover{border-color:rgba(255,255,255,.3); background:rgba(255,255,255,.09)}
+    .btn-sm{min-height:42px; padding:9px 18px; font-size:13px}
+    .burger{
+      width:44px; height:44px; display:grid; place-items:center; color:#fff;
+      background:rgba(255,255,255,.05); border:1px solid var(--border); border-radius:999px;
+    }
+    .mobile-menu{
+      display:none; padding:8px 20px 22px; background:rgba(8,8,11,.98);
+      border-top:1px solid var(--border);
+    }
+    .mobile-menu.is-open{display:block}
+    .mobile-menu a:not(.btn){
+      display:block; padding:16px 0; border-bottom:1px solid rgba(255,255,255,.06); color:#D6D6DE;
+    }
+    .mobile-menu .btn{width:100%; margin-top:18px}
+
+    .hero{position:relative; padding:124px 0 78px; overflow:hidden; text-align:center}
+    .glow{position:absolute; border-radius:50%; filter:blur(110px); pointer-events:none}
+    .glow-1{width:min(90vw,640px); height:min(90vw,640px); top:-230px; left:50%; transform:translateX(-50%); background:rgba(139,92,246,.25)}
+    .glow-2{width:min(70vw,430px); height:min(70vw,430px); top:250px; right:-150px; background:rgba(139,92,246,.15)}
+    .hero-grid{
+      position:absolute; inset:0; pointer-events:none;
+      background-image:linear-gradient(to right,rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.035) 1px,transparent 1px);
+      background-size:68px 68px;
+      mask-image:radial-gradient(circle at center,#000 0%,transparent 72%);
+      -webkit-mask-image:radial-gradient(circle at center,#000 0%,transparent 72%);
+    }
+    .badge{
+      display:inline-flex; padding:9px 16px; border-radius:999px;
+      border:1px solid rgba(139,92,246,.3); background:var(--accent-soft); color:#C4B5FD;
+      font-size:11px; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+    }
+    h1{
+      margin:26px auto 0; max-width:900px;
+      font-size:clamp(37px,9vw,78px); line-height:1.05; letter-spacing:-.04em; font-weight:800;
+    }
+    h1 .accent{
+      background:linear-gradient(100deg,#C4B5FD,var(--accent));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .lead{max-width:640px; margin:22px auto 0; color:var(--muted); font-size:clamp(16px,2.5vw,20px)}
+    .hero-actions{display:flex; flex-direction:column; align-items:center; gap:12px; margin-top:34px}
+    .hero-actions .btn{width:100%}
+    .hero-note{margin:24px 0 0; color:#71717F; font-size:14px}
+
+    .browser{
+      max-width:920px; margin:60px auto 0; padding:8px;
+      border:1px solid var(--border); border-radius:26px; background:var(--surface);
+      box-shadow:0 32px 120px rgba(139,92,246,.15);
+    }
+    .browser-screen{
+      border-radius:20px; padding:22px;
+      background:linear-gradient(135deg,#171720,#0B0B10);
+    }
+    .browser-bar{display:flex; align-items:center; justify-content:space-between; gap:12px}
+    .dots{display:flex; gap:7px}
+    .dots i{width:11px; height:11px; border-radius:50%; background:rgba(255,255,255,.16)}
+    .dots i:last-child{background:rgba(139,92,246,.75)}
+    .url{
+      flex:1; max-width:280px; margin-left:auto; padding:7px 12px; border-radius:999px;
+      background:rgba(255,255,255,.05); color:#71717F; font-size:11px; text-align:center;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .site-preview{margin-top:26px; text-align:left}
+    .preview-nav{display:flex; align-items:center; justify-content:space-between; gap:14px}
+    .preview-brand{font-weight:800; letter-spacing:-.02em}
+    .preview-links{display:none; gap:16px; color:#71717F; font-size:11px}
+    .preview-cta{width:84px; height:28px; border-radius:999px; background:var(--accent)}
+    .preview-hero{margin-top:30px; padding:28px 20px; border:1px solid rgba(255,255,255,.06); border-radius:20px; background:rgba(255,255,255,.025)}
+    .preview-title{width:min(100%,320px); height:16px; border-radius:999px; background:rgba(255,255,255,.16)}
+    .preview-title+.preview-title{width:min(100%,220px); margin-top:10px}
+    .preview-text{width:min(100%,260px); height:8px; margin-top:18px; border-radius:999px; background:rgba(255,255,255,.07)}
+    .preview-text+.preview-text{width:min(100%,200px); margin-top:8px}
+    .preview-buttons{display:flex; gap:10px; margin-top:22px}
+    .preview-buttons i{display:block; width:92px; height:30px; border-radius:999px; background:rgba(139,92,246,.3)}
+    .preview-buttons i+i{background:rgba(255,255,255,.07)}
+    .preview-cards{display:grid; gap:12px; margin-top:22px; grid-template-columns:1fr}
+    .preview-card{padding:16px; border:1px solid rgba(255,255,255,.05); border-radius:16px; background:rgba(255,255,255,.03)}
+    .preview-card.accent{background:rgba(139,92,246,.10)}
+    .preview-line{height:7px; width:60%; border-radius:999px; background:rgba(255,255,255,.13)}
+    .preview-line+.preview-line{width:90%; height:6px; margin-top:9px; background:rgba(255,255,255,.06)}
+
+    section{padding:82px 0}
+    .section-alt{background:var(--surface)}
+    .section-head{max-width:740px; margin:0 auto 46px; text-align:center}
+    .section-label{
+      display:inline-flex; padding:8px 15px; border-radius:999px;
+      border:1px solid var(--border); background:rgba(255,255,255,.04);
+      color:#C4B5FD; font-size:11px; font-weight:800; letter-spacing:.18em; text-transform:uppercase;
+    }
+    h2{margin:20px 0 0; font-size:clamp(29px,5.5vw,48px); line-height:1.1; letter-spacing:-.03em}
+    .section-head p{max-width:620px; margin:16px auto 0; color:var(--muted)}
+
+    .grid{display:grid; gap:18px; grid-template-columns:1fr}
+    .project{
+      overflow:hidden; border:1px solid var(--border); border-radius:26px; background:var(--surface);
+      transition:transform .25s,border-color .25s,box-shadow .25s;
+    }
+    .project:hover{transform:translateY(-4px); border-color:rgba(139,92,246,.38); box-shadow:0 25px 80px rgba(139,92,246,.16)}
+    .project-visual{padding:24px; border-bottom:1px solid var(--border); background:linear-gradient(135deg,#181820,#0D0D12)}
+    .project-tags{display:flex; align-items:center; justify-content:space-between; gap:12px}
+    .tag{
+      padding:6px 12px; border-radius:999px; border:1px solid rgba(139,92,246,.28);
+      background:var(--accent-soft); color:#C4B5FD; font-size:11px; font-weight:800;
+      letter-spacing:.1em; text-transform:uppercase;
+    }
+    .tag-muted{color:#71717F; font-size:12px}
+    .project .browser{margin:24px 0 0; box-shadow:none}
+    .project-body{padding:24px}
+    .project-body h3{margin:0; font-size:clamp(20px,4vw,25px); letter-spacing:-.02em}
+    .project-body p{margin:12px 0 22px; color:var(--muted)}
+    .empty-project{
+      display:grid; place-items:center; min-height:280px; padding:30px; text-align:center;
+      border:1px dashed rgba(255,255,255,.13); border-radius:26px; color:#71717F;
+    }
+
+    .card{
+      padding:26px; border:1px solid var(--border); border-radius:24px; background:var(--bg);
+      transition:transform .25s,border-color .25s;
+    }
+    .section-alt .card{background:var(--bg)}
+    .card:hover{transform:translateY(-4px); border-color:rgba(139,92,246,.35)}
+    .icon{
+      width:48px; height:48px; display:grid; place-items:center; border-radius:16px;
+      background:var(--accent-soft); color:#C4B5FD; font-size:21px;
+    }
+    .card h3{margin:20px 0 10px; font-size:19px; letter-spacing:-.01em}
+    .card p{margin:0; color:var(--muted); font-size:15px}
+    .step-num{color:var(--accent); font-size:14px; font-weight:800}
+
+    .about-grid{display:grid; gap:32px}
+    .about-text{margin-top:20px; color:var(--muted); font-size:clamp(16px,2.2vw,18px)}
+    .check-list{display:grid; gap:12px}
+    .check{
+      display:flex; align-items:center; gap:14px; padding:17px 20px;
+      border:1px solid var(--border); border-radius:18px; background:var(--bg); color:#D6D6DE;
+    }
+    .check i{
+      flex:0 0 auto; width:34px; height:34px; display:grid; place-items:center;
+      border-radius:50%; background:var(--accent-soft); color:#C4B5FD; font-style:normal;
+    }
+
+    .contact-box{
+      position:relative; overflow:hidden; padding:46px 22px; text-align:center;
+      border:1px solid var(--border); border-radius:32px; background:rgba(17,17,22,.94);
+    }
+    .contact-inner{position:relative}
+    .contact-box p{max-width:620px; margin:18px auto 0; color:var(--muted)}
+    .contact-actions{display:flex; flex-direction:column; align-items:center; gap:12px; margin-top:30px}
+    .contact-actions .btn{width:100%}
+    .contact-final{margin-top:22px; color:#71717F; font-size:14px}
+
+    footer{padding:52px 0 28px; border-top:1px solid var(--border)}
+    .footer-grid{display:grid; gap:32px}
+    .footer-grid p{max-width:360px; margin:16px 0 0; color:var(--muted); font-size:14px}
+    .footer-title{margin:0 0 14px; color:var(--muted); font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase}
+    .footer-links{display:grid; gap:10px}
+    .footer-links a{color:#7C7C88; font-size:14px; transition:color .2s}
+    .footer-links a:hover{color:#fff}
+    .footer-bottom{
+      display:grid; gap:8px; margin-top:42px; padding-top:20px;
+      border-top:1px solid var(--border); color:#5F5F6B; font-size:12px;
+    }
+
+    @media (min-width:720px){
+      .container{padding:0 28px}
+      .nav{display:flex}
+      .burger{display:none}
+      .hero{padding:150px 0 92px}
+      .hero-actions,.contact-actions{flex-direction:row}
+      .hero-actions .btn,.contact-actions .btn{width:auto}
+      .preview-links{display:flex}
+      .preview-cards{grid-template-columns:repeat(3,1fr)}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .process-grid{grid-template-columns:repeat(2,1fr)}
+      .about-grid{grid-template-columns:1.1fr .9fr; align-items:center}
+      .footer-grid{grid-template-columns:1.4fr 1fr 1fr}
+      .footer-bottom{grid-template-columns:1fr auto; align-items:center}
+      .contact-box{padding:72px 42px}
+      .project-body,.project-visual{padding:30px}
+    }
+    @media (min-width:1024px){
+      .process-grid{grid-template-columns:repeat(4,1fr)}
+    }
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{transition-duration:.01ms!important; animation-duration:.01ms!important}
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Перейти к содержимому</a>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#home" class="logo">Avofsion<span>TDf</span></a>
+
+      <nav class="nav" aria-label="Основная навигация">
+        <a href="#home" data-i18n="nav_home">Главная</a>
+        <a href="#projects" data-i18n="nav_projects">Проекты</a>
+        <a href="#services" data-i18n="nav_services">Услуги</a>
+        <a href="#about" data-i18n="nav_about">Обо мне</a>
+        <a href="#contact" data-i18n="nav_contacts">Контакты</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="lang" role="group" aria-label="Выбор языка">
+          <button type="button" data-lang="ru" aria-pressed="true">RU</button>
+          <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <a class="btn btn-primary btn-sm desktop-cta" href="https://t.me/Avofs" target="_blank" rel="noopener" data-i18n="nav_cta">Обсудить проект</a>
+        <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Открыть меню">☰</button>
+      </div>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#home" data-i18n="nav_home">Главная</a>
+      <a href="#projects" data-i18n="nav_projects">Проекты</a>
+      <a href="#services" data-i18n="nav_services">Услуги</a>
+      <a href="#about" data-i18n="nav_about">Обо мне</a>
+      <a href="#contact" data-i18n="nav_contacts">Контакты</a>
+      <a class="btn btn-primary" href="https://t.me/Avofs" target="_blank" rel="noopener" data-i18n="nav_cta">Обсудить проект</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="home">
+      <div class="glow glow-1"></div>
+      <div class="glow glow-2"></div>
+      <div class="hero-grid"></div>
+
+      <div class="container" style="position:relative">
+        <span class="badge" data-i18n="hero_badge">WEB DEVELOPMENT · DIGITAL DESIGN</span>
+        <h1>
+          <span data-i18n="hero_title_1">Создаю сайты,</span>
+          <span class="accent" data-i18n="hero_title_2">которые выделяют ваш бизнес</span>
+        </h1>
+        <p class="lead" data-i18n="hero_subtitle">Современный дизайн, продуманная структура и адаптивная разработка — от идеи до готового сайта</p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://t.me/Avofs" target="_blank" rel="noopener" data-i18n="hero_primary">Обсудить проект</a>
+          <a class="btn btn-ghost" href="#projects" data-i18n="hero_secondary">Смотреть проекты</a>
+        </div>
+
+        <p class="hero-note" data-i18n="hero_note">Сайты, лендинги и цифровые продукты для бизнеса</p>
+
+        <div class="browser" aria-hidden="true">
+          <div class="browser-screen">
+            <div class="browser-bar">
+              <div class="dots"><i></i><i></i><i></i></div>
+              <span class="url">avofsiontdf.netlify.app</span>
+            </div>
+            <div class="site-preview">
+              <div class="preview-nav">
+                <span class="preview-brand">AvofsionTDf</span>
+                <div class="preview-links"><span>Home</span><span>Work</span><span>Services</span><span>Contact</span></div>
+                <span class="preview-cta"></span>
+              </div>
+              <div class="preview-hero">
+                <div class="preview-title"></div>
+                <div class="preview-title"></div>
+                <div class="preview-text"></div>
+                <div class="preview-text"></div>
+                <div class="preview-buttons"><i></i><i></i></div>
+              </div>
+              <div class="preview-cards">
+                <div class="preview-card"><div class="preview-line"></div><div class="preview-line"></div></div>
+                <div class="preview-card accent"><div class="preview-line"></div><div class="preview-line"></div></div>
+                <div class="preview-card"><div class="preview-line"></div><div class="preview-line"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-label" data-i18n="projects_label">Проекты</span>
+          <h2 data-i18n="projects_title">Избранные работы</h2>
+          <p data-i18n="projects_subtitle">Демонстрационные проекты, отражающие подход к дизайну, структуре и разработке.</p>
+        </div>
+
+        <div class="grid">
+          <article class="project">
+            <div class="project-visual">
+              <div class="project-tags">
+                <span class="tag" data-i18n="projects_demo">Демо-проект</span>
+                <span class="tag-muted" data-i18n="projects_concept">Концепт</span>
+              </div>
+
+              <div class="browser" aria-hidden="true">
+                <div class="browser-screen">
+                  <div class="browser-bar">
+                    <div class="dots"><i></i><i></i><i></i></div>
+                    <span class="url">barbershop-site-55c604.netlify.app</span>
+                  </div>
+                  <div class="site-preview">
+                    <div class="preview-nav">
+                      <span class="preview-brand">ОБСИДИАН</span>
+                      <div class="preview-links"><span>Услуги</span><span>Мастера</span><span>Цены</span><span>Запись</span></div>
+                      <span class="preview-cta"></span>
+                    </div>
+                    <div class="preview-hero">
+                      <div class="preview-title"></div>
+                      <div class="preview-title"></div>
+                      <div class="preview-text"></div>
+                      <div class="preview-buttons"><i></i><i></i></div>
+                    </div>
+                    <div class="preview-cards">
+                      <div class="preview-card"><div class="preview-line"></div><div class="preview-line"></div></div>
+                      <div class="preview-card accent"><div class="preview-line"></div><div class="preview-line"></div></div>
+                      <div class="preview-card"><div class="preview-line"></div><div class="preview-line"></div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-body">
+              <h3 data-i18n="project1_title">Обсидиан — сайт барбершопа</h3>
+              <p data-i18n="project1_text">Концепт сайта барбершопа в тёмной эстетике с акцентом на визуальный стиль, услуги и запись клиентов.</p>
+              <a class="btn btn-ghost btn-sm" href="http://barbershop-site-55c604.netlify.app" target="_blank" rel="noopener" data-i18n="projects_open">Открыть сайт ↗</a>
+            </div>
+          </article>
+
+          <div class="empty-project" data-i18n="projects_more">Новые проекты добавляются сюда</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-alt" id="services">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-label" data-i18n="services_label">Услуги</span>
+          <h2 data-i18n="services_title">Что я создаю</h2>
+          <p data-i18n="services_subtitle">Разработка сайтов под задачу бизнеса: от презентационного лендинга до полноценного корпоративного сайта.</p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <div class="icon" aria-hidden="true">◧</div>
+            <h3 data-i18n="service1_title">Лендинги для бизнеса</h3>
+            <p data-i18n="service1_text">Одностраничные сайты с ясной структурой, сильным первым экраном и понятным призывом к действию.</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true">▣</div>
+            <h3 data-i18n="service2_title">Сайты для компаний и локальных услуг</h3>
+            <p data-i18n="service2_text">Многостраничные сайты для компаний, студий, мастеров и локального бизнеса: услуги, преимущества, контакты.</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true">◈</div>
+            <h3 data-i18n="service3_title">Портфолио и персональные сайты</h3>
+            <p data-i18n="service3_text">Аккуратные персональные сайты и портфолио, которые помогают представить работы и expertise профессионально.</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true">⟳</div>
+            <h3 data-i18n="service4_title">Редизайн и улучшение существующих сайтов</h3>
+            <p data-i18n="service4_text">Обновление визуального стиля, структуры и адаптивности существующего сайта без потери его сути.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-label" data-i18n="process_label">Процесс</span>
+          <h2 data-i18n="process_title">Как проходит работа</h2>
+          <p data-i18n="process_subtitle">Прозрачный процесс от первой идеи до публикации сайта.</p>
+        </div>
+
+        <div class="grid process-grid">
+          <article class="card">
+            <span class="step-num">01</span>
+            <h3 data-i18n="step1_title">Обсуждение задачи</h3>
+            <p data-i18n="step1_text">Разбираем цель сайта, аудиторию, желаемый стиль и необходимые разделы.</p>
+          </article>
+          <article class="card">
+            <span class="step-num">02</span>
+            <h3 data-i18n="step2_title">Структура и концепция</h3>
+            <p data-i18n="step2_text">Формируем логику страниц, контентную структуру и визуальное направление.</p>
+          </article>
+          <article class="card">
+            <span class="step-num">03</span>
+            <h3 data-i18n="step3_title">Дизайн и разработка</h3>
+            <p data-i18n="step3_text">Создаём интерфейс и превращаем его в адаптивный, рабочий сайт.</p>
+          </article>
+          <article class="card">
+            <span class="step-num">04</span>
+            <h3 data-i18n="step4_title">Проверка и публикация</h3>
+            <p data-i18n="step4_text">Проверяем отображение на разных устройствах, исправляем детали и готовим сайт к запуску.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-alt" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div>
+            <span class="section-label" data-i18n="about_label">Обо мне</span>
+            <h2 data-i18n="about_title">Веб-разработка с вниманием к деталям</h2>
+            <p class="about-text" data-i18n="about_text">Я создаю современные сайты, уделяя внимание визуальному стилю, удобству использования и корректной работе на разных устройствах. Моя цель — превратить идею в понятный, аккуратный и функциональный веб-продукт.</p>
+          </div>
+
+          <div class="check-list">
+            <div class="check"><i aria-hidden="true">✓</i><span data-i18n="about_point1">Внимание к визуальной целостности</span></div>
+            <div class="check"><i aria-hidden="true">✓</i><span data-i18n="about_point2">Адаптивность для мобильных устройств</span></div>
+            <div class="check"><i aria-hidden="true">✓</i><span data-i18n="about_point3">Понятная структура и пользовательский опыт</span></div>
+            <div class="check"><i aria-hidden="true">✓</i><span data-i18n="about_point4">Аккуратная реализация интерфейса</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="contact-box">
+          <div class="glow" style="width:min(80vw,420px); height:min(80vw,420px); top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(139,92,246,.20)"></div>
+          <div class="contact-inner">
+            <span class="section-label" data-i18n="contact_label">Контакты</span>
+            <h2 data-i18n="contact_title">Есть идея для сайта? Давай обсудим</h2>
+            <p data-i18n="contact_text">Расскажи о задаче, пришли примеры или ссылки — обсудим структуру, стиль и возможное решение.</p>
+
+            <div class="contact-actions">
+              <a class="btn btn-primary" href="https://t.me/Avofs" target="_blank" rel="noopener" data-i18n="contact_telegram">Написать в Telegram</a>
+              <button class="btn btn-ghost" id="copyContact" type="button" data-i18n="contact_copy">Скопировать контакт</button>
+            </div>
+
+            <p class="contact-final" data-i18n="contact_final">Начнём с короткого обсуждения задачи</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#home" class="logo">Avofsion<span>TDf</span></a>
+          <p data-i18n="footer_description">Создание современных сайтов, лендингов, сайтов для бизнеса и портфолио.</p>
+        </div>
+
+        <div>
+          <h3 class="footer-title" data-i18n="footer_nav">Навигация</h3>
+          <div class="footer-links">
+            <a href="#home" data-i18n="nav_home">Главная</a>
+            <a href="#projects" data-i18n="nav_projects">Проекты</a>
+            <a href="#services" data-i18n="nav_services">Услуги</a>
+            <a href="#about" data-i18n="nav_about">Обо мне</a>
+            <a href="#contact" data-i18n="nav_contacts">Контакты</a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-title" data-i18n="footer_contact">Связь</h3>
+          <div class="footer-links">
+            <a href="https://t.me/Avofs" target="_blank" rel="noopener">Telegram: @Avofs</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> AvofsionTDf. <span data-i18n="footer_rights">Все права защищены</span></span>
+        <span data-i18n="footer_made">Designed & developed by AvofsionTDf</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var translations = {
+        ru: {
+          skip: "Перейти к содержимому",
+          nav_home: "Главная", nav_projects: "Проекты", nav_services: "Услуги",
+          nav_about: "Обо мне", nav_contacts: "Контакты", nav_cta: "Обсудить проект",
+          hero_badge: "WEB DEVELOPMENT · DIGITAL DESIGN",
+          hero_title_1: "Создаю сайты,",
+          hero_title_2: "которые выделяют ваш бизнес",
+          hero_subtitle: "Современный дизайн, продуманная структура и адаптивная разработка — от идеи до готового сайта",
+          hero_primary: "Обсудить проект", hero_secondary: "Смотреть проекты",
+          hero_note: "Сайты, лендинги и цифровые продукты для бизнеса",
+          projects_label: "Проекты", projects_title: "Избранные работы",
+          projects_subtitle: "Демонстрационные проекты, отражающие подход к дизайну, структуре и разработке.",
+          projects_demo: "Демо-проект", projects_concept: "Концепт",
+          project1_title: "Обсидиан — сайт барбершопа",
+          project1_text: "Концепт сайта барбершопа в тёмной эстетике с акцентом на визуальный стиль, услуги и запись клиентов.",
+          projects_open: "Открыть сайт ↗", projects_more: "Новые проекты добавляются сюда",
+          services_label: "Услуги", services_title: "Что я создаю",
+          services_subtitle: "Разработка сайтов под задачу бизнеса: от презентационного лендинга до полноценного корпоративного сайта.",
+          service1_title: "Лендинги для бизнеса",
+          service1_text: "Одностраничные сайты с ясной структурой, сильным первым экраном и понятным призывом к действию.",
+          service2_title: "Сайты для компаний и локальных услуг",
+          service2_text: "Многостраничные сайты для компаний, студий, мастеров и локального бизнеса: услуги, преимущества, контакты.",
+          service3_title: "Портфолио и персональные сайты",
+          service3_text: "Аккуратные персональные сайты и портфолио, которые помогают представить работы и expertise профессионально.",
+          service4_title: "Редизайн и улучшение существующих сайтов",
+          service4_text: "Обновление визуального стиля, структуры и адаптивности существующего сайта без потери его сути.",
+          process_label: "Процесс", process_title: "Как проходит работа",
+          process_subtitle: "Прозрачный процесс от первой идеи до публикации сайта.",
+          step1_title: "Обсуждение задачи",
+          step1_text: "Разбираем цель сайта, аудиторию, желаемый стиль и необходимые разделы.",
+          step2_title: "Структура и концепция",
+          step2_text: "Формируем логику страниц, контентную структуру и визуальное направление.",
+          step3_title: "Дизайн и разработка",
+          step3_text: "Создаём интерфейс и превращаем его в адаптивный, рабочий сайт.",
+          step4_title: "Проверка и публикация",
+          step4_text: "Проверяем отображение на разных устройствах, исправляем детали и готовим сайт к запуску.",
+          about_label: "Обо мне", about_title: "Веб-разработка с вниманием к деталям",
+          about_text: "Я создаю современные сайты, уделяя внимание визуальному стилю, удобству использования и корректной работе на разных устройствах. Моя цель — превратить идею в понятный, аккуратный и функциональный веб-продукт.",
+          about_point1: "Внимание к визуальной целостности",
+          about_point2: "Адаптивность для мобильных устройств",
+          about_point3: "Понятная структура и пользовательский опыт",
+          about_point4: "Аккуратная реализация интерфейса",
+          contact_label: "Контакты", contact_title: "Есть идея для сайта? Давай обсудим",
+          contact_text: "Расскажи о задаче, пришли примеры или ссылки — обсудим структуру, стиль и возможное решение.",
+          contact_telegram: "Написать в Telegram", contact_copy: "Скопировать контакт",
+          contact_copied: "Скопировано", contact_copy_fallback: "Открыть @Avofs",
+          contact_final: "Начнём с короткого обсуждения задачи",
+          footer_description: "Создание современных сайтов, лендингов, сайтов для бизнеса и портфолио.",
+          footer_nav: "Навигация", footer_contact: "Связь",
+          footer_rights: "Все права защищены",
+          footer_made: "Designed & developed by AvofsionTDf",
+          menu_open: "Открыть меню", menu_close: "Закрыть меню"
+        },
+        en: {
+          skip: "Skip to content",
+          nav_home: "Home", nav_projects: "Projects", nav_services: "Services",
+          nav_about: "About", nav_contacts: "Contact", nav_cta: "Discuss a project",
+          hero_badge: "WEB DEVELOPMENT · DIGITAL DESIGN",
+          hero_title_1: "I build websites",
+          hero_title_2: "that make your business stand out",
+          hero_subtitle: "Modern design, thoughtful structure and responsive development — from idea to a finished website",
+          hero_primary: "Discuss a project", hero_secondary: "View projects",
+          hero_note: "Websites, landing pages and digital products for business",
+          projects_label: "Projects", projects_title: "Selected work",
+          projects_subtitle: "Demo projects that reflect my approach to design, structure and development.",
+          projects_demo: "Demo project", projects_concept: "Concept",
+          project1_title: "Obsidian — barbershop website",
+          project1_text: "A barbershop website concept in a dark aesthetic, focused on visual style, services and client booking.",
+          projects_open: "Open website ↗", projects_more: "New projects will be added here",
+          services_label: "Services", services_title: "What I build",
+          services_subtitle: "Website development tailored to business goals: from a presentation landing page to a full company website.",
+          service1_title: "Business landing pages",
+          service1_text: "Single-page websites with a clear structure, strong hero section and a clear call to action.",
+          service2_title: "Company and local service websites",
+          service2_text: "Multi-page websites for companies, studios, specialists and local businesses: services, advantages and contacts.",
+          service3_title: "Portfolios and personal websites",
+          service3_text: "Clean personal websites and portfolios that present work and expertise professionally.",
+          service4_title: "Redesign and improvement of existing websites",
+          service4_text: "Updating the visual style, structure and responsiveness of an existing website without losing its core identity.",
+          process_label: "Process", process_title: "How the work goes",
+          process_subtitle: "A transparent process from the first idea to publishing the website.",
+          step1_title: "Discussing the task",
+          step1_text: "We define the website goal, audience, preferred style and required sections.",
+          step2_title: "Structure and concept",
+          step2_text: "We shape the page logic, content structure and visual direction.",
+          step3_title: "Design and development",
+          step3_text: "We create the interface and turn it into a responsive, working website.",
+          step4_title: "Review and publication",
+          step4_text: "We check how the website works on different devices, refine details and prepare it for launch.",
+          about_label: "About", about_title: "Web development with attention to detail",
+          about_text: "I create modern websites with attention to visual style, usability and correct performance across different devices. My goal is to turn an idea into a clear, polished and functional web product.",
+          about_point1: "Attention to visual consistency",
+          about_point2: "Mobile-first responsiveness",
+          about_point3: "Clear structure and user experience",
+          about_point4: "Careful interface implementation",
+          contact_label: "Contact", contact_title: "Have a website idea? Let’s discuss it",
+          contact_text: "Tell me about your task or send examples and links — we can discuss the structure, style and possible solution.",
+          contact_telegram: "Message on Telegram", contact_copy: "Copy contact",
+          contact_copied: "Copied", contact_copy_fallback: "Open @Avofs",
+          contact_final: "Let’s start with a short discussion of your task",
+          footer_description: "Modern websites, landing pages, business websites and portfolio development.",
+          footer_nav: "Navigation", footer_contact: "Contact",
+          footer_rights: "All rights reserved",
+          footer_made: "Designed & developed by AvofsionTDf",
+          menu_open: "Open menu", menu_close: "Close menu"
+        }
+      };
+
+      var langButtons = document.querySelectorAll(".lang button");
+      var burger = document.getElementById("burger");
+      var mobileMenu = document.getElementById("mobileMenu");
+      var copyButton = document.getElementById("copyContact");
+      var currentLang = "ru";
+
+      function setLanguage(lang) {
+        currentLang = lang;
+        document.documentElement.lang = lang;
+        document.title = lang === "ru"
+          ? "AvofsionTDf — создание современных сайтов"
+          : "AvofsionTDf — Modern Website Development";
+
+        var nodes = document.querySelectorAll("[data-i18n]");
+        for (var i = 0; i < nodes.length; i++) {
+          var key = nodes[i].getAttribute("data-i18n");
+          if (translations[lang][key]) nodes[i].textContent = translations[lang][key];
+        }
+
+        for (var j = 0; j < langButtons.length; j++) {
+          langButtons[j].setAttribute("aria-pressed", String(langButtons[j].dataset.lang === lang));
+        }
+
+        burger.setAttribute("aria-label", translations[lang].menu_open);
+        try { localStorage.setItem("avofsion-lang", lang); } catch (e) {}
+      }
+
+      for (var k = 0; k < langButtons.length; k++) {
+        langButtons[k].addEventListener("click", function () {
+          setLanguage(this.dataset.lang);
+        });
+      }
+
+      burger.addEventListener("click", function () {
+        var isOpen = mobileMenu.classList.toggle("is-open");
+        burger.setAttribute("aria-expanded", String(isOpen));
+        burger.textContent = isOpen ? "✕" : "☰";
+        burger.setAttribute("aria-label", translations[currentLang][isOpen ? "menu_close" : "menu_open"]);
+      });
+
+      mobileMenu.addEventListener("click", function (event) {
+        if (event.target.tagName === "A") {
+          mobileMenu.classList.remove("is-open");
+          burger.setAttribute("aria-expanded", "false");
+          burger.textContent = "☰";
+          burger.setAttribute("aria-label", translations[currentLang].menu_open);
+        }
+      });
+
+      copyButton.addEventListener("click", function () {
+        var contact = "@Avofs";
+
+        function showCopied() {
+          copyButton.textContent = translations[currentLang].contact_copied;
+          setTimeout(function () {
+            copyButton.textContent = translations[currentLang].contact_copy;
+          }, 2000);
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(contact).then(showCopied).catch(function () {
+            copyButton.textContent = translations[currentLang].contact_copy_fallback;
+            window.open("https://t.me/Avofs", "_blank", "noopener");
+          });
+        } else {
+          copyButton.textContent = translations[currentLang].contact_copy_fallback;
+          window.open("https://t.me/Avofs", "_blank", "noopener");
+        }
+      });
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      var savedLang = "ru";
+      try { savedLang = localStorage.getItem("avofsion-lang") || "ru"; } catch (e) {}
+      setLanguage(savedLang === "en" ? "en" : "ru");
+    })();
+  </script>
+</body>
+</html>
